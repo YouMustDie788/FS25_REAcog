@@ -1,21 +1,21 @@
 ﻿--
 -- REA COG Script
 -- author: 900Hasse
--- date: 23.11.2021
+-- date: 01.12.2024
 --
 -- V1.0.1.1
 --
 -----------------------------------------
 -- TO DO
 ---------------
--- 
--- 
+--
+--
 
 -----------------------------------------
 -- KNOWN ISSUES
 ---------------
--- 
--- 
+--
+--
 
 print("---------------------------")
 print("----- REA by 900Hasse -----")
@@ -43,14 +43,14 @@ function REAcog:update(dt)
 			REAcog.DebugTimer = 0;
 		end;
 		-- Get number of vehicles
-		local numVehicles = table.getn(g_currentMission.vehicles);
+		local numVehicles = table.getn(g_currentMission.vehicleSystem.vehicles);
 		-- If vehicles present run code
 		if numVehicles ~= nil then
 			-- Run code for vehicles
 			if numVehicles >= 1 then
 				for VehicleIndex=1, numVehicles do
 					-- Save "vehicle" to local
-					local vehicle = g_currentMission.vehicles[VehicleIndex];			
+					local vehicle = g_currentMission.vehicleSystem.vehicles[VehicleIndex];			
 					-- Check if current vehicle exists
 					if vehicle ~= nil then
 						for _,component in pairs(vehicle.components) do
@@ -87,7 +87,7 @@ function REAcog:update(dt)
 
 						if false then
 							if vehicle.spec_wheels ~= nil then
-								if vehicle.spec_wheels.wheels ~= nil then 
+								if vehicle.spec_wheels.wheels ~= nil then
 									local WheelIndex = 0;
 									for _,wheel in pairs(vehicle.spec_wheels.wheels) do
 										-- Count index for information
@@ -128,7 +128,7 @@ end;
 function REAcog:CalculateNewCenterOfMass(vehicle)
 	-- Check if there are wheels on this vehicle
 	if vehicle.spec_wheels ~= nil then
-		if vehicle.spec_wheels.wheels ~= nil then 
+		if vehicle.spec_wheels.wheels ~= nil then
 			-- Print info
 			REAcog:PrintDebug("----------------------------------------------------------------------------------------")
 			REAcog:PrintDebug("Name: " .. vehicle:getFullName())
@@ -138,7 +138,7 @@ function REAcog:CalculateNewCenterOfMass(vehicle)
 
 			-- Get number of wheels
 			local numVehicleWheels = table.getn(vehicle.spec_wheels.wheels);
-			-- Adjust center of mass on all components 
+			-- Adjust center of mass on all components
 			for _,component in pairs(vehicle.components) do
 				-- Count to next component
 				CurrentComp = CurrentComp + 1;
@@ -200,8 +200,8 @@ function REAcog:CalculateNewCenterOfMass(vehicle)
 							component.IsCrawler = IsCrawler and NumberOfWheel > 2;
 
 							-- Get largest radius
-							if wheel.radiusOriginal > LargestWheelRadius or LargestRadius > LargestWheelRadius then
-								LargestWheelRadius = wheel.radiusOriginal;
+							if wheel.physics.radiusOriginal > LargestWheelRadius or LargestRadius > LargestWheelRadius then
+								LargestWheelRadius = wheel.physics.radiusOriginal;
 							end;
 							-- If not crawler use wheel as reference else use rotating part
 							if not component.IsCrawler then
@@ -421,7 +421,7 @@ end
 -- Edited addToPhysics
 -----------------------------------------------------------------------------------
 function REAcog:addToPhysics()
-	-- Check if center of mass should be checked and 
+	-- Check if center of mass should be checked and
     -- REA
 	if self.isServer then
 		if not self.isAddedToPhysics then
@@ -452,7 +452,7 @@ function REAcog:loadComponentFromXML(component, xmlFile, key, rootPosition, i)
 	end;
 	-- Run original function
 	local result = self:OriginalloadComponentFromXML(component, xmlFile, key, rootPosition, i);
-	-- Get original center of gravity 
+	-- Get original center of gravity
 	if component.OriginalCOGX == nil then
 		-- Initialize variables
 		component.OriginalCOGX = 0;
