@@ -1,9 +1,9 @@
 ﻿--
 -- REA COG Script
 -- author: 900Hasse
--- date: 01.12.2024
+-- date: 04.12.2024
 --
--- V1.0.1.1
+-- V1.0.1.2
 --
 -----------------------------------------
 -- TO DO
@@ -637,7 +637,7 @@ function REAcog:getAdditionalComponentMass(superFunc, component)
 						-- If there is no fill volume, use generic value for example liquids
 						local MaxHeight = 0.5;
 						if fillUnit.capacity > 0 then
-							MaxHeight = MathUtil.clamp(fillUnit.capacity / 4000, 0.25, 1.25);
+							MaxHeight = math.clamp(fillUnit.capacity / 4000, 0.25, 1.25);
 						end;
 						if component.ReaCOGX ~= nil then
 							AddMassCOGX = component.ReaCOGX;
