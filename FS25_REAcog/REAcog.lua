@@ -1,9 +1,9 @@
 ﻿--
 -- REA COG Script
--- author: 900Hasse
--- date: 04.12.2024
+-- author: 900Hasse - Edited by Keklient
+-- date: 05.12.2024
 --
--- V1.0.1.2
+-- V0.1.0.0
 --
 -----------------------------------------
 -- TO DO
